@@ -75,7 +75,6 @@ HANGMAN = (
 
 max_wrong = len(HANGMAN)
 WORDS = ('питон', 'игра', 'программирование', 'колесо', "танк", "мишь")
-
 word = choice(WORDS)
 so_far = '_' * len(word)
 wrong = 0
