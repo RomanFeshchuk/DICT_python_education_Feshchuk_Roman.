@@ -1,1 +1,7 @@
-
+#1 (First Stage)
+def main ()
+    print ('Loan principal: 1000')
+    print ('Mont 1: repaid 250')
+    print ('Mont 2: repaid 250')
+    print ('Mont 3: repaid 500')
+    print ('The loan has been repaid')
