@@ -1,5 +1,4 @@
 #2 (The Second Stage)
-
 from math import ceil
 
 
