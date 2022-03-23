@@ -1,16 +1,116 @@
-# This is a sample Python script.
+from random import choice
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+HANGMAN = (
+    """
+     ------
+     | |
+     |
+     |
+     |
+     |
+     |
+    ----------
+    """,
+    """
+     ------
+     | |
+     | O
+     |
+     |
+     |
+     |
+    ----------
+    """,
+    """
+     ------
+     | |
+     | O
+     | |
+     |
+     |
+     |
+    ----------
+    """,
+    """
+     ------
+     | |
+     | O
+     | /|
+     |
+     |
+     |
+    ----------
+    """,
+    """
+     ------
+     | |
+     |  O
+     | /|\\
+     |
+     |
+     |
+    ----------
+    """,
+    """
+     ------
+     | |
+     | O
+     | /|\\
+     | /
+     |
+     |
+    ----------
+    """,
+    """
+     ------
+     | |
+     | O
+     | /|\\
+     | / \\
+     |
+     |
+    ----------
+    """
+)
 
+max_wrong = 2
+WORDS = ('питон', 'игра', 'программирование', 'колесо', "танк", "мишь")
+word = choice(WORDS)
+so_far = '_' * len(word)
+wrong = 0
+used = []
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+while wrong < max_wrong and so_far != word:
+    print(HANGMAN[wrong])
+    print('\nВы использовали следующие буквы:\n', used)
+    print('\nНа данный момент слово выглядит так:\n', so_far)
 
+    guess = input('\n У Вас есть 2 попытки чтобы ответить не правильно. Введите свой вариант слова: ')
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+    while guess in used:
+        print('Вы уже угадали букву', guess)
+        guess = input('Введите своё предположение: ')
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    used.append(guess)
+
+    if guess in word:
+        print('\nДа! \'' + guess + '\' эта буква есть в слове!')
+
+        new = ''
+        for i in range(len(word)):
+            if guess == word[i]:
+                new += guess
+            else:
+                new += so_far[i]
+        so_far = new
+    else:
+        print('\nИзвините, данной буквы \'' + guess + '\' нет в слове.')
+        wrong += 1
+
+if wrong == max_wrong:
+    print(HANGMAN[wrong])
+    print('\nТебя повесили! Было использованно 2 попыток')
+else:
+    print('\nПоздравляем Вы угадали слово!')
+
+print('\nЗагаданное слово было \'' + word + '\'')

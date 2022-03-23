@@ -1,159 +1,141 @@
-import sys
-from random import randint
+class CoffeeMachine:
+    def __init__(self):
+        self.w = 400
+        self.m = 540
+        self.b = 120
+        self.c = 9
+        self.mon = 550
+        self.wat = 250
+        self.bar = 40
+    def fill(self):
+        self.w += int(input("Write how many water do want: > "))
+        self.m += int(input("Write how many milk do want: > "))
+        self.b += int(input("Write how many beans do want: > "))
+        self.c += int(input("Write how many cups do want: > "))
+        self.bar += int(input("Write how many bars do want: > "))
 
-VERTICAL_COORDINATS = ('a', 'b', 'c')
-EMPTY_CHAR = '_'
-AI_TURN = True
-USER_TURN = False
-
-
-def get_user_char():
-    user_char = input('Select char (x, 0): ').strip(' ').lower()
-    while user_char not in ('x', '0'):
-        print('Not available char')
-        user_char = input('Select char (x, 0): ').strip(' ').lower()
-    return user_char
-
-
-def show_field(field):
-    print(' ', '1', '2', '3')
-    for y, v in enumerate(VERTICAL_COORDINATS):
-        print(v, ' '.join(field[y]))
-
-
-def is_draw(field):
-    count = 0
-    for y in range(3):
-        count += 1 if EMPTY_CHAR in field[y] else 0
-    return count == 0
-
-
-def get_user_position(field):
-    real_x, real_y = 0, 0
-    while True:
-        coordinats = input('Input coordinats: ').lower().strip(' ')
-        y, x = tuple(coordinats)
-
-        if int(x) not in (1, 2, 3) or y not in VERTICAL_COORDINATS:
-            print('Not valid coordinats')
-            continue
-
-        real_x, real_y = int(x) - 1, VERTICAL_COORDINATS.index(y)
-        if field[real_y][real_x] == EMPTY_CHAR:
-            break
+    def esp(self):
+        if self.w < 250:
+            print("Sorry, enough water in coffee machine.")
+        elif self.b < 16:
+            print("Sorry, enough beans in coffee machine.")
+        elif self.c < 1:
+            print("Sorry, enough cups in coffee machine.")
+        elif self.bar < 1:
+            print("Sorry, enough bars in coffee machine.")
         else:
-            print('Position not empty')
+            self.w -= 250
+            self.b -= 16
+            self.c -= 1
+            self.mon += 4
+            print("""Starting make a coffee
 
-    return real_x, real_y
+Griding coffee beans
+Boiling water
+Mixing water with crushed beans
+Pouring coffee into cup
+Coffee ready!""")
 
-
-def get_opponent_char(char):
-    return '0' if char == 'x' else 'x'
-
-
-def is_win(char, field):
-    opponent_char = get_opponent_char(char)
-    # проверяем строки
-    for y in range(3):
-        if opponent_char not in field[y] and EMPTY_CHAR not in field[y]:
-            return True
-
-    # проверяем колонки
-    for x in range(3):
-        col = [field[0][x], field[1][x], field[2][x]]
-        if opponent_char not in col and EMPTY_CHAR not in col:
-            return True
-
-    # проверяем диагонали
-    diagonal = [field[0][0], field[1][1], field[2][2]]
-    if opponent_char not in diagonal and EMPTY_CHAR not in diagonal:
-        return True
-    diagonal = [field[0][2], field[1][1], field[2][0]]
-    if opponent_char not in diagonal and EMPTY_CHAR not in diagonal:
-        return True
-
-    return False
-
-
-def minimax(board, depth, is_ai_turn):
-    if is_win(computer_char, board):
-        return scores[computer_char]
-    if is_win(user_char, board):
-        return scores[user_char]
-    if is_draw(board):
-        return scores['draw']
-
-    if is_ai_turn:
-        # выбираем ход который нам выгодней
-        best_score = - sys.maxsize
-        for y in range(3):
-            for x in range(3):
-                if board[y][x] == EMPTY_CHAR:
-                    board[y][x] = computer_char
-                    score = minimax(board, depth + 1, USER_TURN)
-                    board[y][x] = EMPTY_CHAR
-                    best_score = max(best_score, score)
-    else:
-        # противник выбирает ход который нам не выгоден
-        best_score = sys.maxsize
-        for y in range(3):
-            for x in range(3):
-                if board[y][x] == EMPTY_CHAR:
-                    board[y][x] = user_char
-                    score = minimax(board, depth + 1, AI_TURN)
-                    board[y][x] = EMPTY_CHAR
-                    best_score = min(best_score, score)
-    return best_score
+    def lat(self):
+        if self.w < 350:
+            print("Sorry, enough water in coffee machine.")
+        elif self.m < 75:
+            print("Sorry, enough milk in coffee machine.")
+        elif self.b < 20:
+            print("Sorry, enough beans in coffee machine.")
+        elif self.c < 1:
+            print("Sorry, enough cups in coffee machine.")
+        else:
+            self.w -= 250
+            self.m -= 75
+            self.b -= 16
+            self.c -= 1
+            self.mon += 7
+            print("""Starting make a coffee
+Griding coffee beans
+Boiling water
+Mixing water with crushed beans
+Pouring coffee into cup
+Adding milk into your coffee
+Coffee ready!""")
 
 
-def get_computer_position(field):
-    move = None
-    best_score = -sys.maxsize
-    board = [field[y].copy() for y in range(3)]
-    for y in range(3):
-        for x in range(3):
-            if board[y][x] == EMPTY_CHAR:
-                board[y][x] = computer_char
-                score = minimax(board, 0, USER_TURN)
-                board[y][x] = EMPTY_CHAR
-                if score > best_score:
-                    best_score = score
-                    move = (x, y)
+    def cap(self):
+        if self.w < 200:
+            print("Sorry, enough water in coffee machine.")
+        elif self.m < 100:
+            print("Sorry, enough milk in coffee machine.")
+        elif self.b < 12:
+            print("Sorry, enough beans in coffee machine.")
+        elif self.c < 1:
+            print("Sorry, enough cups in coffee machine.")
+        else:
+            self.w -= 250
+            self.m -= 75
+            self.b -= 16
+            self.c -= 1
+            self.mon += 6
+            print("""Starting make a coffee
+Griding coffee beans
+Boiling water
+Mixing water with crushed beans
+Pouring coffee into cup
+Adding milk into your coffee
+Coffee ready!""")
 
-    return move
+
+    def water(self):
+        if self.w < 200:
+            print("Sorry, enough water in coffee machine.")
+        if self.bar < 400:
+            print("Sorry, enough bars in coffee machine.")
+        else:
+            self.w -= 250
+            self.mon += 5
+            print("""Starting pouring a water
+Pouring water into bar
+Your water ready!""")
+
+    def take(self):
+        print(f"I gave you {self.mon} uah.")
+        self.mon = self.mon - self.mon
 
 
-field = [
-    [EMPTY_CHAR for x in range(3)] for y in range(3)
-]
+    def remaining(self):
+        print(f"""In coffee machine:
+        {self.w} of water.
+        {self.m} of milk.
+        {self.b} of beans.
+        {self.c} of cups.
+        {self.bar} of bars.
+        {self.mon}  of money.""")
 
-user_char = get_user_char()
-computer_char = get_opponent_char(user_char)
 
-scores = {
-    user_char: -100,
-    computer_char: 100,
-    'draw': 0
-}
 
+objects = CoffeeMachine()
 while True:
-    show_field(field)
-    if is_draw(field):
-        print('is draw')
+    act = str(input("Write action (buy, fill, take, remaining, exit): >  "))
+    if act == "buy":
+        while act != "back":
+            selecting = input("What you wanna buy; 1 - espresso, 2 - latte, 3 - cappuccino, 4 - water.")
+
+            if selecting == "1":
+                objects.esp()
+                break
+            if selecting == "2":
+                objects.lat()
+                break
+            if selecting == "3":
+                objects.cap()
+                break
+            if selecting == "4":
+                objects.water()
+                break
+    if act == "fill":
+        objects.fill()
+    if act == "take":
+        objects.take()
+    if act == "exit":
         break
-
-    x, y = get_user_position(field)
-    field[y][x] = user_char
-    if is_win(user_char, field):
-        print('you win')
-        break
-
-    move = get_computer_position(field)
-    if move is not None:
-        x, y = move
-        field[y][x] = computer_char
-        if is_win(computer_char, field):
-            print('you lose')
-            break
-
-show_field(field)
+    if act == "remaining":
+        objects.remaining()
